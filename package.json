@@ -1,0 +1,23 @@
+{
+  "name": "movie-pinger",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenalia/movie-pinger.git"
+  },
+  "author": "Kenalia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenalia/movie-pinger/issues"
+  },
+  "homepage": "https://github.com/kenalia/movie-pinger#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
