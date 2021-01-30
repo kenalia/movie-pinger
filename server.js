@@ -11,7 +11,7 @@ app.get('/api/v1/getMovieByTitle/:title', (req, res) => {
     res.send(req.params.title);
 });
 
-app.get('/api/vq/test', (req, res) => {
+app.get('/api/v1/test', (req, res) => {
     res.send('Yeah it work');
 });
 
