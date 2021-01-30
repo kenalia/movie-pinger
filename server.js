@@ -11,6 +11,10 @@ app.get('/api/v1/getMovieByTitle/:title', (req, res) => {
     res.send(req.params.title);
 });
 
+app.get('/api/vq/test', (req, res) => {
+    res.send('Yeah it work');
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
