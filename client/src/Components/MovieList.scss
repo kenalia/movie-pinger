@@ -1,0 +1,15 @@
+.movieList {
+  display: flex;
+  flex-direction: column;
+
+  & img {
+    max-height: 150px;
+    max-width: 100px;
+  }
+
+  & .mlItem {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
