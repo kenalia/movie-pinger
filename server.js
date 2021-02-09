@@ -4,17 +4,6 @@ if(process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const path = require('path');
 const fetch = require('node-fetch');
-const crypto = require('crypto');
-const { Client } = require('pg');
-
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl:{
-        rejectUnauthorized: false
-    }
-});
-
-client.connect();
 
 const app = express();
 

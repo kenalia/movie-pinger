@@ -5,6 +5,9 @@ const client = new Client({
     rejectUnauthorized: false
   }
 })
+
+client.connect();
+
 module.exports = {
   query: (text, params, callback) => {
     return client.query(text, params, callback)

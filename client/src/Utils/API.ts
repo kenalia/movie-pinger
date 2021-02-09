@@ -4,8 +4,8 @@ export const getMovieByTitle = (title: string, callback: (m: MovieInfo) => void)
         data));
 }
 
-export const pingWatcher = (uid: string, movie: string) => {
-    fetch(`/watchers/pingWatcher?uid=${uid}&movie=${movie}`, {
+export const pingWatcher = (userid: number, movie: string) => {
+    fetch(`/watchers/pingWatcher?userid=${userid}&movie=${movie}`, {
         method: 'POST'
     }).then((data) => data.json()).then((data) => console.log(data));
 }
@@ -19,4 +19,14 @@ export const addNewWatcher = (username: string, password: string, email?: string
         method: 'POST'
     })
         .then((data) => data.json()).then((data) => console.log(data.reason))
+}
+
+export const getWatcherList = (userid: string) => {
+    fetch(`/watchers/watcherList?user=${userid}`)
+        .then((data) => data.json()).then((data) => console.log(data));
+}
+
+export const getAllWatchers = () => {
+    fetch(`/watchers/allWatchers`)
+        .then((data) => data.json()).then((data) => console.log(data));
 }

@@ -8,7 +8,7 @@ type MLProps = {
 export const MovieList = (props: MLProps) => {
 
     return <div className='movieList'>
-        { props.movies.map((i, ix) => <MovieListItem key={ix} info={i}/>)}
+        { props.movies && props.movies.map((i, ix) => <MovieListItem key={ix} info={i}/>)}
     </div>
 
 }
