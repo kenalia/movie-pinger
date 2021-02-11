@@ -32,6 +32,7 @@ export const getAllWatchers = (callback: (w: Watcher[]) => void) => {
 }
 
 export const loginWatcher = (userid: string, password: string, callback: (d: any) => void) => {
+    console.log(userid, password);
     fetch(`/auth/login?userid=${userid}&pass=${password}`)
         .then((data) => data.json()).then((data) => callback(data));
 };

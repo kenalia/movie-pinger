@@ -49,7 +49,6 @@ router.post('/addNewWatcher', async (req, res) => {
 })
 
 router.get('/watcherList', async (req, res) => {
-    console.log('here');
     try {
         const result = await db.query('SELECT movieid, rec_count, pending FROM watcherlist WHERE userid = $1', [req.query.user]);
         console.log(result.rows);
