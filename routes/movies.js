@@ -5,10 +5,23 @@ const endpoint = `http://omdbapi.com/?apikey=${process.env.API_KEY}&`;
 
 const router = new Router();
 
-module.exports = router;
-
 router.get('/byTitle/:title', (req, res) => {
-    console.log(req.params.title);
     fetch(`${endpoint}t=${req.params.title}`).then(data => data.json()).then((data) => res.send(data));
 });
 
+router.get('/byID', (req, res) => {
+    fetch(`${endpoint}i=${req.query.id}`).then(data => data.json()).then((data) => res.status(200).send(data))
+})
+
+const isMovieValid = async (id) => {
+    const res = await fetch(`${endpoint}i=${id}`);
+    const data = await res.json();
+    if(!data.Error)
+        return true;
+    return false;
+}
+
+module.exports = {
+    router: router,
+    isMovieValid: isMovieValid
+}

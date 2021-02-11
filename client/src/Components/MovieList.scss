@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
 
+  & h1 {
+    color: white;
+  }
+
   & img {
     max-height: 150px;
     max-width: 100px;

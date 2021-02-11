@@ -20,6 +20,8 @@ export const LoginBox = () => {
             return;
 
         sessionStorage.setItem('authtoken', data.token);
+        sessionStorage.setItem('uniqueid', data.id);
+        sessionStorage.setItem('username', data.userid);
 
         testAuth();
 

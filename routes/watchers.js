@@ -2,6 +2,7 @@ const Router = require('express-promise-router');
 const db = require('../db')
 const crypto = require('crypto');
 const router = new Router();
+const movies = require('./movies');
 
 module.exports = router;
 
@@ -9,16 +10,22 @@ router.post('/pingWatcher', async (req, res) => {
     const user = req.query.userid;
     const movie = req.query.movie;
 
+    let valid = await movies.isMovieValid(movie);
+    if(!valid) {
+        res.status(409).send({ reason: 'Bad IMDB id'});
+        return;
+    }
+
     const result = await db.query('SELECT * FROM watcherlist WHERE userid = $1 AND movieid = $2', [user, movie]);
     if(result.rows?.length > 0) {
         db.query('UPDATE watcherlist SET rec_count = $1 WHERE userid = $2 AND movieid = $3 RETURNING *', [result.rows[0].rec_count+1, user, movie])
-        res.sendStatus(200);
+        res.status(200).send({ });
         return;
     }
 
     db.query('INSERT INTO watcherlist (userid, movieid, rec_count, pending) VALUES ($1, $2, $3, $4) RETURNING *', [user, movie, 1, true])
         .then((data) => console.log(data));
-    res.sendStatus(200);
+    res.status(200).send({});
 })
 
 router.post('/addNewWatcher', async (req, res) => {
@@ -44,11 +51,12 @@ router.post('/addNewWatcher', async (req, res) => {
         .catch(err => console.log(err))
         .finally(() => console.log(`Successfully added user \'${user}\'`));
     res.status(200).send({});
-})
+});
 
 router.get('/watcherList', async (req, res) => {
     try {
-        const result = await db.query('SELECT movieid, rec_count, pending FROM watcherlist WHERE userid = $1', [req.query.user]);
+        console.log(req.query.id);
+        const result = await db.query('SELECT movieid, rec_count, pending FROM watcherlist WHERE userid = $1', [req.query.id]);
         console.log(result.rows);
         res.status(200).send(result.rows);
     } catch(e) {
@@ -60,4 +68,15 @@ router.get('/watcherList', async (req, res) => {
 router.get('/allWatchers', async (req, res) => {
     const result = await db.query('SELECT id, uid from watcher;');
     res.status(200).send(result.rows);
+})
+
+router.get('/watcherName', async (req, res) => {
+    db.query('SELECT uid FROM watcher WHERE id = $1', [req.query.id], (err, result) => {
+        if(err) console.log(err.stack);
+        else {
+            res.status(200).send({ username: result?.rows[0]?.uid });
+            return;
+        }
+        res.status(409).send({ reason: 'No user found with that ID'});
+    })
 })

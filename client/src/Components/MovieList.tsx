@@ -2,12 +2,14 @@ import React from 'react';
 import './MovieList.scss';
 
 type MLProps = {
+    title: string;
     movies: MovieInfo[];
 }
 
 export const MovieList = (props: MLProps) => {
 
     return <div className='movieList'>
+        <h4>{props.title}</h4>
         { props.movies && props.movies.map((i, ix) => <MovieListItem key={ix} info={i}/>)}
     </div>
 

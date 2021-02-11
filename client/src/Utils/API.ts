@@ -4,7 +4,7 @@ export const getMovieByTitle = (title: string, callback: (m: MovieInfo) => void)
         data));
 }
 
-export const pingWatcher = (userid: number, movie: string) => {
+export const pingWatcher = (userid: string, movie: string) => {
     fetch(`/watchers/pingWatcher?userid=${userid}&movie=${movie}`, {
         method: 'POST'
     }).then((data) => data.json()).then((data) => console.log(data));
@@ -21,8 +21,8 @@ export const addNewWatcher = (username: string, password: string, callback: (d: 
         .then((data) => data.json()).then((data) => callback(data));
 }
 
-export const getWatcherList = (userid: string, callback: (d: MovieInfo[]) => void) => {
-    fetch(`/watchers/watcherList?user=${userid}`)
+export const getWatcherList = async (userid: string, callback: (d: MovieInfo[]) => void) => {
+    fetch(`/watchers/watcherList?id=${userid}`)
         .then((data) => data.json()).then((data) => console.log(data));
 }
 
@@ -41,12 +41,56 @@ export const testAuth = () => {
         .then((data) => data.json()).then((data) => console.log(data));
 }
 
-export const getProfileData = async (id: string, callback: (d: any) => void) => {
+export const getWatcherName = async (userid: string, callback: (d: string) => void): Promise<void> => {
+    fetch(`/watchers/watcherName?id=${userid}`)
+        .then((data) => data.json()).then((data) => callback(data.username)).then(() => {return new Promise<void>((resolve => {}))})
+}
+
+export const getProfileData = async (id: string, callback: (d: ProfileData) => void) => {
     // get list
     // seperate into each
     // get user data
-    let list: MovieInfo[];
-    console.log('getting');
+    let prof: ProfileData = {
+        id: id,
+        uid: '',
+        recCounts: [],
+        recList: [],
+        toWatch: []
+    }
 
-    await getWatcherList(id, (d) => console.log(d));
+    let res = await fetch(`/watchers/watcherList?id=${id}`);
+
+    let list: WatcherMovie[] = await res.json();
+    console.log(list);
+    let recs: string[] = [], rest: string[] = [];
+
+    list.forEach((i) => {
+        if(i.pending) {
+            recs.push(i.movieid);
+            prof.recCounts.push({ movieid: i.movieid, count: i.rec_count});
+            return;
+        }
+
+        rest.push(i.movieid);
+    });
+
+    let data: any;
+
+    for(let i = 0; i < recs.length; i++) {
+        res = await fetch(`/movies/byID?id=${recs[i]}`);
+        data = await res.json();
+        prof.recList.push(data as MovieInfo);
+    }
+
+    for(let i = 0; i < rest.length; i++) {
+        res = await fetch(`/movies/byID?id=${rest[i]}`);
+        data = await res.json();
+        prof.toWatch.push(data as MovieInfo);
+    }
+
+    res = await fetch(`/watchers/watcherName?id=${id}`);
+    data = await res.json();
+    prof.uid = data.username;
+
+    callback(prof);
 }

@@ -17,9 +17,15 @@ interface RecCount {
 }
 
 interface ProfileData {
-    id: number,
+    id: string,
     uid: string,
     recList: MovieInfo[],
     recCounts: RecCount[],
     toWatch: MovieInfo[]
+}
+
+interface WatcherMovie {
+    movieid: string;
+    rec_count: number;
+    pending: boolean;
 }

@@ -7,7 +7,7 @@ export const Navbar = () => {
     return (
         <div className='navbar'>
             <h5>Movie Pinger</h5>
-            <Link to='/watchers/self'>
+            <Link to='/watcher/self'>
                 <GiPlagueDoctorProfile/>
             </Link>
         </div>
