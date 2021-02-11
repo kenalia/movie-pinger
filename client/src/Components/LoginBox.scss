@@ -1,0 +1,81 @@
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  justify-content: center;
+  align-items: center;
+
+  & h1 {
+    color: white;
+  }
+
+  & .boxFooter {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    & .accBtn {
+      text-align: center;
+      cursor: pointer;
+      margin: 0;
+      height: 20px;
+      transition: all 0.3s;
+      margin-left: 5px;
+      margin-right: 5px;
+
+      &:hover {
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+    }
+
+    .btnChevron {
+      height: 20px;
+      fill: #3500d3;
+    }
+
+    .btnChevron.right {
+      transform: rotate(180deg);
+    }
+  }
+
+  & .loginForm, & .createForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    & input {
+      padding: 10px;
+      margin: 0 0 15px;
+      width: 100%;
+      height: 20%;
+      min-height: 60px;
+      background-color: #282828;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+    }
+
+    & .ant-btn {
+      background-color: #240090;
+      color: white;
+      border: none;
+      margin-bottom: 15px;
+    }
+  }
+
+  & .loginForm {
+
+  }
+
+  & .createForm {
+
+  }
+}

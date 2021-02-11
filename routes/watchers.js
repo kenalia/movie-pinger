@@ -49,12 +49,18 @@ router.post('/addNewWatcher', async (req, res) => {
 })
 
 router.get('/watcherList', async (req, res) => {
-    const result = await db.query('SELECT movieid FROM watcherlist WHERE userid = $1', [req.query.user]);
-    console.log(result.rows);
-    res.status(200).send(result.rows);
+    console.log('here');
+    try {
+        const result = await db.query('SELECT movieid, rec_count, pending FROM watcherlist WHERE userid = $1', [req.query.user]);
+        console.log(result.rows);
+        res.status(200).send(result.rows);
+    } catch(e) {
+        console.log(e.stack);
+        res.status(409).send({reason: 'No known user with ID'});
+    }
 })
 
 router.get('/allWatchers', async (req, res) => {
-    const result = await db.query('SELECT * from watcher;');
+    const result = await db.query('SELECT id, uid from watcher;');
     res.status(200).send(result.rows);
 })

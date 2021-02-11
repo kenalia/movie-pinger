@@ -1,3 +1,14 @@
+@import '~antd/dist/antd.css';
+
+$deep-purple: #0c0032;
+$purplish: #190061;
+$mid-blue: #240090;
+$blueish: #3500d3;
+$dark-grayish: #282828;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+$roboto: 'Roboto', sans-serif;
+$roboto-con: 'Roboto Condensed', sans-serif;
+
 .searchBar {
   width: 90%;
   max-width: 100%;
@@ -8,3 +19,34 @@
   border-radius: 8px;
 
 }
+
+html, body, #root, #root>div {
+  height: 100%
+}
+
+body {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  font-family: $roboto-con;
+}
+
+p {
+  color: white;
+  font-family: $roboto;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+  margin-bottom: 2%;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
