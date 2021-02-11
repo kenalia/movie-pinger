@@ -27,8 +27,6 @@ router.post('/addNewWatcher', async (req, res) => {
     const pass = req.query.pass;
     const email = req.query.email ? req.query.email : '';
 
-    let invalid = false;
-
     let result = await db.query('SELECT uid FROM watcher WHERE uid = $1', [user]);
     if(result.rows?.length > 0) {
         res.status(409).send({reason: 'Username already exists'})
@@ -45,7 +43,7 @@ router.post('/addNewWatcher', async (req, res) => {
     db.query('INSERT INTO watcher (uid, pass_hash, salt) VALUES ($1, $2, $3) RETURNING *', [user, hash, salt])
         .catch(err => console.log(err))
         .finally(() => console.log(`Successfully added user \'${user}\'`));
-    res.sendStatus(200);
+    res.status(200).send({});
 })
 
 router.get('/watcherList', async (req, res) => {

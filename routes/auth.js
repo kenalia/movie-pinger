@@ -47,6 +47,8 @@ router.get('/login', async (req, res) => {
         res.status(409).send({ reason: 'Bad info'});
     }
 
+    const id = result.rows[0].id;
+    const user = result.rows[0].uid;
     const pass = req.query.pass;
     const salt = result.rows[0].salt;
     const hash = crypto.createHash('sha256').update(pass+salt).digest('hex');
@@ -62,7 +64,7 @@ router.get('/login', async (req, res) => {
     }
 
     const token = jwt.sign(payload, process.env.PRIVATE_KEY);
-    res.status(200).send({ token: token});
+    res.status(200).send({ token: token, id: id, userid: user});
 })
 
 router.get('/test', checkAuth,(req, res) => {
